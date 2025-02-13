@@ -1,3 +1,4 @@
+import { PressButton } from "@/components/buttons";
 import { fetchDX } from "@/lib/advance-fetch";
 import type { CountryType } from "@/types/countries";
 import { useQuery } from "@tanstack/react-query";
@@ -7,23 +8,25 @@ const HomeScreenModule = () => {
   const { data, isLoading, isError, error } = useQuery( {
     queryKey: [ "countries" ],
     queryFn: async () => {
-      const data = await fetchDX<{ data: CountryType[]; }>( {
-        url: "/api/v1/countries", options: {
-          method: "GET", headers: {
-            Authorization: "Bearer 2162|sOmHg5d3D3uIN7uchugJtiBPXNHgXwyDNNCTRQB8",
-            "Content-Type": "application/json"
-          }
+      const data = await fetchDX<CountryType[]>( {
+        url: "https://restcountries.com/v3.1/all", options: {
+          method: "GET",
         },
 
       } );
+      console.log( data );
       return data;
     },
-    enabled: false
+    enabled: true
   } );
   // console.log( 'error: ', error );
 
   return ( <View>
     <Text>Home</Text>
+    { isLoading ? <Text>Loading</Text> : <Text>{ JSON.stringify( data ) }</Text> }
+    <PressButton>
+      <Text>Press</Text>
+    </PressButton>
 
   </View> );
 };

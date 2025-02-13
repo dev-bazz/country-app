@@ -1,9 +1,10 @@
 export interface CountryType {
-	name: string;
+	name: {
+		common: string;
+		official: string;
+	};
 	full_name: string;
 	capital: string;
-	iso: string;
-	iso3: string;
 	current_president: {
 		name: string;
 		appointment_start_date: string;
@@ -22,4 +23,9 @@ export interface CountryType {
 	states: string;
 	presidents: string;
 	flag: string;
+	flags: {
+		svg: string;
+		png: string;
+	};
+	continents: string[];
 }

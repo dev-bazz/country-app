@@ -4,10 +4,11 @@
  */
 export async function fetchDX<T>(args: argsFetchDX): Promise<T> {
 	const { url, params, options } = args;
-	const baseUrl = process.env.BASE_URL || "https://restfulcountries.com";
+	const baseUrl = process.env.BASE_URL || "";
 	const modifiedUrlWithBase =
 		(url && baseUrl ? `${baseUrl}${url}` : baseUrl) || url;
 	let modifiedUrl = modifiedUrlWithBase;
+	console.log("modifiedUrl: ", modifiedUrl);
 
 	if (params) {
 		if (options.method === "GET" || options.method === "HEAD") {
