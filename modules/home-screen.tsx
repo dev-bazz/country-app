@@ -81,6 +81,8 @@ const HomeScreenModule = () => {
 											backgroundColor: 'hsla(220, 22%, 96%, 1)',
 											flexDirection: 'row',
 											justifyContent: 'center',
+											alignItems: 'center',
+											alignSelf: 'center',
 										},
 										pressed && {
 											backgroundColor: pressed
@@ -92,6 +94,7 @@ const HomeScreenModule = () => {
 										name="search"
 										size={24}
 										color="black"
+										style={{}}
 									/>
 									<UIText
 										colorType={theme}
