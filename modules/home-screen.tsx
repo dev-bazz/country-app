@@ -2,7 +2,7 @@ import { PressButton } from "@/components/buttons";
 import { fetchDX } from "@/lib/advance-fetch";
 import type { CountryType } from "@/types/countries";
 import { useQuery } from "@tanstack/react-query";
-import { Text, View } from "react-native";
+import { SafeAreaView, Text, View } from "react-native";
 
 const HomeScreenModule = () => {
   const { data, isLoading, isError, error } = useQuery( {
@@ -21,14 +21,14 @@ const HomeScreenModule = () => {
   } );
   // console.log( 'error: ', error );
 
-  return ( <View>
+  return ( <SafeAreaView>
     <Text>Home</Text>
     { isLoading ? <Text>Loading</Text> : <Text>{ JSON.stringify( data ) }</Text> }
     <PressButton>
       <Text>Press</Text>
     </PressButton>
 
-  </View> );
+  </SafeAreaView> );
 };
 
 export default HomeScreenModule;
