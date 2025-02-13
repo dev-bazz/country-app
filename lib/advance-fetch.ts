@@ -8,7 +8,6 @@ export async function fetchDX<T>(args: argsFetchDX): Promise<T> {
 	const modifiedUrlWithBase =
 		(url && baseUrl ? `${baseUrl}${url}` : baseUrl) || url;
 	let modifiedUrl = modifiedUrlWithBase;
-	console.log("modifiedUrl: ", modifiedUrl);
 
 	if (params) {
 		if (options.method === "GET" || options.method === "HEAD") {

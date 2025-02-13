@@ -15,11 +15,11 @@ export const appColorsEnv: colorTheme = {
 	},
 	dark: {
 		primary: "rgb(10, 132, 255)",
-		card: "rgb(18, 18, 18)",
+		card: "hsla(216, 99%, 7%, 1)",
 		text: "rgb(229, 229, 231)",
 		border: "rgb(39, 39, 41)",
 		notification: "rgb(255, 69, 58)",
-		background: "#000",
+		background: "hsla(216, 99%, 7%, 1)",
 		tint: tintColorDark,
 		tabIconDefault: "#ccc",
 		tabIconSelected: tintColorDark,
@@ -38,7 +38,7 @@ type color = {
 	tabIconDefault?: string;
 	tabIconSelected?: string;
 };
-interface colorTheme {
+export interface colorTheme {
 	light: color;
 	dark: color;
 }

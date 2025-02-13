@@ -2,13 +2,15 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import { useReactQueryDevTools } from '@dev-plugins/react-query';
 import { handleExpoStorage } from "@/lib/storage";
+import { useColorScheme } from "react-native";
 
 const AppGlobalContext = createContext<AppContextType | null>( null );
 const queryClient = new QueryClient();
 
 export const AppGlobalProvider = ( { children }: { children: ReactNode; } ) => {
   useReactQueryDevTools( queryClient );
-  const [ theme, setTheme ] = useState<"light" | "dark">( "light" );
+  const colorSchema = useColorScheme();
+  const [ theme, setTheme ] = useState<"light" | "dark">( colorSchema ?? "light" );
   const handleSignal = useCallback( () => {
     console.log( "Logining From Context" );
   }, [] );
