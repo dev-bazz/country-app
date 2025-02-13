@@ -4,14 +4,13 @@ import { useAppContext } from "@/context";
 import { getExpoStorage } from "@/lib/storage";
 import { ThemeProvider, DarkTheme, DefaultTheme } from "@react-navigation/native";
 import { Stack } from "expo-router";
-import { useColorScheme, View } from "react-native";
+import { View } from "react-native";
 import { ThemeProvider as ETP } from '@emotion/react';
 import { Image } from "expo-image";
 import { BrandImages } from "@/constants/images";
 import { useMediaAndPlatform } from "@/hooks";
 
 export default function LayoutNav () {
-  const colorScheme = useColorScheme();
   const { widthScaleFactor } = useMediaAndPlatform();
   const { theme } = useAppContext();
   getExpoStorage( "theme" ).then( ( res ) => {
@@ -29,6 +28,7 @@ export default function LayoutNav () {
             headerRight ( props ) {
               return <ToggleTheme />;
             },
+            title: "",
             headerLeft: () => <View>
               <Image style={ { width: 98 * widthScaleFactor, aspectRatio: "98/24" } } source={ theme === "dark" ? BrandImages.dark : BrandImages.light } />
             </View>,
