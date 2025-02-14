@@ -10,13 +10,17 @@ import {
 	Pressable,
 	SafeAreaView,
 	SectionList,
+	StatusBar,
 	View,
 } from 'react-native';
 import Feather from '@expo/vector-icons/Feather';
 import { useMediaAndPlatform } from '@/hooks';
+import { useRef } from 'react';
+import { ModalBottomSheet } from '@/components/bottomsheet';
 const HomeScreenModule = () => {
 	const { theme } = useAppContext();
 	const { widthScaleFactor } = useMediaAndPlatform();
+	const searchCountyRef = useRef(null);
 	const { data, isLoading, isError, error } = useQuery({
 		queryKey: ['countries'],
 		queryFn: async () => {
@@ -55,6 +59,14 @@ const HomeScreenModule = () => {
 
 	return (
 		<SafeAreaView>
+			<StatusBar
+				backgroundColor={
+					theme === 'dark' ? 'hsla(216, 99%, 7%, 1)' : 'white'
+				}
+				animated
+				barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
+			/>
+			<ModalBottomSheet ref={searchCountyRef} />
 			{isLoading ? (
 				<ActivityIndicator
 					size={'large'}
