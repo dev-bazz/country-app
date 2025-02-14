@@ -8,14 +8,14 @@ import { useMediaAndPlatform } from '@/hooks';
 const ToggleTheme = () => {
 	const colorTheme = useColorScheme();
 	const [isDark, setIsDark] = useState(colorTheme === 'dark');
-	console.log('isDark: ', isDark);
+
 	const { handleToggleTheme } = useAppContext();
 	const { widthScaleFactor, heightScaleFactor } =
 		useMediaAndPlatform();
 	const iconSize = 24 * widthScaleFactor;
 	const handleToggle = useCallback(() => {
 		setIsDark(!isDark);
-		console.log('Hello');
+
 		handleToggleTheme(isDark ? 'light' : 'dark');
 	}, [handleToggleTheme, isDark]);
 	return (
@@ -26,8 +26,8 @@ const ToggleTheme = () => {
 					backgroundColor: isDark
 						? 'hsla(220, 22%, 46%, .2)'
 						: 'hsla(220, 22%, 96%, 1)',
-					padding: 8 * widthScaleFactor,
-					borderRadius: 30,
+					padding: 4 * widthScaleFactor,
+					borderRadius: 50,
 				},
 			]}
 			onPressIn={handleToggle}>

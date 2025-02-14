@@ -1,11 +1,14 @@
 import {
 	BottomSheetModalProvider,
 	BottomSheetModal,
-	BottomSheetView,
 	BottomSheetBackdrop,
+	BottomSheetFlatList,
+	BottomSheetTextInput,
 } from '@gorhom/bottom-sheet';
 import { forwardRef, useCallback, useMemo } from 'react';
-import { Text } from 'react-native';
+import { UIText } from '../text';
+import { useAppContext } from '@/context';
+import { View } from 'react-native';
 type forwardRefType = BottomSheetModal | null;
 interface Props {
 	snapPoints?: string[];
@@ -32,8 +35,9 @@ interface Props {
  */
 export const ModalBottomSheet = forwardRef<forwardRefType, Props>(
 	(props, ref) => {
+		const { theme } = useAppContext();
 		const snapPoint = useMemo(
-			() => props.snapPoints ?? ['25%', '50%', '90%', '100%'],
+			() => props.snapPoints ?? ['50%', '80%'],
 			[props.snapPoints],
 		);
 		const renderBackdrop = useCallback(
@@ -47,6 +51,7 @@ export const ModalBottomSheet = forwardRef<forwardRefType, Props>(
 			),
 			[],
 		);
+
 		return (
 			<BottomSheetModalProvider>
 				<BottomSheetModal
@@ -54,11 +59,48 @@ export const ModalBottomSheet = forwardRef<forwardRefType, Props>(
 					ref={ref}
 					snapPoints={snapPoint}
 					index={1}
-					backgroundStyle={[]}
-					handleIndicatorStyle={[{ backgroundColor: 'black' }]}>
-					<BottomSheetView style={[]}>
-						<Text>Awesome 🎉</Text>
-					</BottomSheetView>
+					backgroundStyle={[
+						{ backgroundColor: theme === 'dark' ? '#000F24' : 'white' },
+					]}
+					handleIndicatorStyle={[
+						{ backgroundColor: theme === 'dark' ? 'white' : 'black' },
+					]}>
+					<View style={{ paddingInline: 16, paddingBlock: 12 }}>
+						<BottomSheetTextInput
+							placeholder="Search for a country..."
+							placeholderTextColor={theme === 'dark' ? 'white' : 'black'}
+							style={{
+								textAlignVertical: 'top',
+								textAlign: 'center',
+								backgroundColor: 'rgba(160, 160, 160, 0.15)',
+								paddingInline: 16,
+								height: 40,
+								borderRadius: 4,
+								color: theme === 'dark' ? 'white' : 'black',
+							}}
+							keyboardAppearance={theme}
+						/>
+					</View>
+					<BottomSheetFlatList
+						data={[]}
+						contentContainerStyle={{ paddingInline: 16 }}
+						ListEmptyComponent={
+							<UIText
+								fontSize="16px"
+								colorType={theme}>
+								No data
+							</UIText>
+						}
+						renderItem={() => (
+							<>
+								<UIText
+									fontSize="16px"
+									colorType={theme}>
+									Text
+								</UIText>
+							</>
+						)}
+					/>
 				</BottomSheetModal>
 			</BottomSheetModalProvider>
 		);

@@ -13,14 +13,11 @@ import { ThemeProvider as ETP } from '@emotion/react';
 import { Image } from 'expo-image';
 import { BrandImages } from '@/constants/images';
 import { useMediaAndPlatform } from '@/hooks';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function LayoutNav() {
 	const { widthScaleFactor } = useMediaAndPlatform();
 	const { theme } = useAppContext();
-	getExpoStorage('theme').then((res) => {
-		console.log('res', res);
-	});
+	getExpoStorage('theme').then((res) => {});
 
 	return (
 		<ThemeProvider
@@ -32,36 +29,34 @@ export default function LayoutNav() {
 					  }
 					: { ...DefaultTheme, ...appColorsEnv.light }
 			}>
-			<GestureHandlerRootView>
-				<ETP
-					theme={{ light: appColorsEnv.light, dark: appColorsEnv.dark }}>
-					<Stack>
-						<Stack.Screen
-							name="index"
-							options={{
-								headerRight(props) {
-									return <ToggleTheme />;
-								},
-								title: '',
-								headerLeft: () => (
-									<View>
-										<Image
-											style={{
-												width: 98 * widthScaleFactor,
-												aspectRatio: '98/24',
-											}}
-											source={
-												theme === 'dark' ? BrandImages.dark : BrandImages.light
-											}
-										/>
-									</View>
-								),
-								headerShadowVisible: true,
-							}}
-						/>
-					</Stack>
-				</ETP>
-			</GestureHandlerRootView>
+			<ETP
+				theme={{ light: appColorsEnv.light, dark: appColorsEnv.dark }}>
+				<Stack screenOptions={{}}>
+					<Stack.Screen
+						name="index"
+						options={{
+							headerRight(props) {
+								return <ToggleTheme />;
+							},
+							title: '',
+							headerLeft: () => (
+								<View>
+									<Image
+										style={{
+											width: 88 * widthScaleFactor,
+											aspectRatio: '98/24',
+										}}
+										source={
+											theme === 'dark' ? BrandImages.dark : BrandImages.light
+										}
+									/>
+								</View>
+							),
+							headerShadowVisible: true,
+						}}
+					/>
+				</Stack>
+			</ETP>
 		</ThemeProvider>
 	);
 }
