@@ -9,6 +9,7 @@ import { forwardRef, useCallback, useMemo } from 'react';
 import { UIText } from '../text';
 import { useAppContext } from '@/context';
 import { View } from 'react-native';
+import { useMediaAndPlatform } from '@/hooks';
 type forwardRefType = BottomSheetModal | null;
 interface Props {
 	snapPoints?: string[];
@@ -36,6 +37,7 @@ interface Props {
 export const ModalBottomSheet = forwardRef<forwardRefType, Props>(
 	(props, ref) => {
 		const { theme } = useAppContext();
+		const { widthScaleFactor } = useMediaAndPlatform();
 		const snapPoint = useMemo(
 			() => props.snapPoints ?? ['50%', '80%'],
 			[props.snapPoints],
@@ -51,6 +53,7 @@ export const ModalBottomSheet = forwardRef<forwardRefType, Props>(
 			),
 			[],
 		);
+		
 
 		return (
 			<BottomSheetModalProvider>
@@ -59,6 +62,7 @@ export const ModalBottomSheet = forwardRef<forwardRefType, Props>(
 					ref={ref}
 					snapPoints={snapPoint}
 					index={1}
+					enablePanDownToClose
 					backgroundStyle={[
 						{ backgroundColor: theme === 'dark' ? '#000F24' : 'white' },
 					]}
@@ -86,7 +90,7 @@ export const ModalBottomSheet = forwardRef<forwardRefType, Props>(
 						contentContainerStyle={{ paddingInline: 16 }}
 						ListEmptyComponent={
 							<UIText
-								fontSize="16px"
+								fontSize={`${16 * widthScaleFactor}px`}
 								colorType={theme}>
 								No data
 							</UIText>
@@ -94,7 +98,7 @@ export const ModalBottomSheet = forwardRef<forwardRefType, Props>(
 						renderItem={() => (
 							<>
 								<UIText
-									fontSize="16px"
+									fontSize={`${16 * widthScaleFactor}px`}
 									colorType={theme}>
 									Text
 								</UIText>

@@ -12,6 +12,7 @@ import {
 import { useReactQueryDevTools } from '@dev-plugins/react-query';
 import { handleExpoStorage } from '@/lib/storage';
 import { useColorScheme } from 'react-native';
+import type { CountryType } from '@/types/countries';
 
 const AppGlobalContext = createContext<AppContextType | null>(null);
 const queryClient = new QueryClient();
@@ -23,10 +24,18 @@ export const AppGlobalProvider = ({
 }) => {
 	useReactQueryDevTools(queryClient);
 	const colorSchema = useColorScheme();
+
 	const [theme, setTheme] = useState<'light' | 'dark'>(
 		colorSchema ?? 'light',
 	);
+	const [countries, setCountries] = useState<CountryType[]>([]);
+
+	const handleSetCountries = useCallback((data: CountryType[]) => {
+		setCountries(data);
+	}, []);
+
 	const handleSignal = useCallback(() => {}, []);
+
 	const handleToggleTheme = useCallback((theme: 'light' | 'dark') => {
 		handleExpoStorage('theme', theme);
 		setTheme(theme);
@@ -40,6 +49,8 @@ export const AppGlobalProvider = ({
 						handleSignal,
 						theme,
 						handleToggleTheme,
+						countries,
+						handleSetCountries,
 					}}>
 					{children}
 				</AppGlobalContext.Provider>
@@ -59,4 +70,6 @@ type AppContextType = {
 	theme: 'light' | 'dark';
 	handleSignal: () => void;
 	handleToggleTheme: (theme: 'light' | 'dark') => void;
+	countries: CountryType[];
+	handleSetCountries: (data: CountryType[]) => void;
 };

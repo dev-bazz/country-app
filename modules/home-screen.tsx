@@ -20,7 +20,7 @@ import { ModalBottomSheet } from '@/components/bottomsheet';
 import type { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 const HomeScreenModule = () => {
-	const { theme } = useAppContext();
+	const { theme, handleSetCountries } = useAppContext();
 	const { widthScaleFactor } = useMediaAndPlatform();
 	const searchCountyRef = useRef<BottomSheetModal | null>(null);
 	const { data, isLoading, isError, error } = useQuery({
@@ -32,6 +32,7 @@ const HomeScreenModule = () => {
 					method: 'GET',
 				},
 			});
+			handleSetCountries(data);
 			const arrageAlphabetically = data.reduce(
 				(acc: { data: CountryType[]; type: string }[], curre) => {
 					const firstLetter = curre.name.common.charAt(0);

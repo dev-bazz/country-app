@@ -23,7 +23,12 @@ export interface CountryType {
 	states: string;
 	presidents: string;
 	flag: string;
+	region: string;
 	flags: {
+		svg: string;
+		png: string;
+	};
+	coatOfArms: {
 		svg: string;
 		png: string;
 	};
