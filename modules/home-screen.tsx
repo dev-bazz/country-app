@@ -78,23 +78,24 @@ const HomeScreenModule = () => {
 										{
 											padding: 16,
 											borderRadius: 4 * widthScaleFactor,
-											backgroundColor: 'hsla(220, 22%, 96%, 1)',
+											backgroundColor:
+												theme === 'light'
+													? 'hsla(220, 22%, 96%, 1)'
+													: 'rgba(197, 197, 197, 0.164)',
 											flexDirection: 'row',
 											justifyContent: 'center',
 											alignItems: 'center',
-											alignSelf: 'center',
+											position: 'relative',
 										},
 										pressed && {
-											backgroundColor: pressed
-												? 'hsla(220, 22%, 96%, 1)'
-												: 'hsla(220, 22%, 84%, 1)',
+											backgroundColor: 'rgba(75, 75, 75, 0.252)',
 										},
 									]}>
 									<Feather
 										name="search"
 										size={24}
-										color="black"
-										style={{}}
+										color={theme === 'light' ? 'black' : 'white'}
+										style={{ position: 'absolute', left: 24 }}
 									/>
 									<UIText
 										colorType={theme}
@@ -131,10 +132,11 @@ const HomeScreenModule = () => {
 											source={`${item.flags.png}`}
 											style={{
 												width: 50,
-												height: 50,
-												aspectRatio: '1',
+												aspectRatio: '2/1.5',
 												objectFit: 'fill',
-												borderRadius: 50,
+												borderRadius: 4,
+												borderWidth: 1,
+												borderColor: 'rgb(165, 165, 165)',
 											}}
 										/>
 									</View>
