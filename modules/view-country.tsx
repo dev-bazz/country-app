@@ -22,7 +22,7 @@ const CountryDetails = (props: { details: CountryType }) => {
 			current_president,
 			region,
 			coatOfArms,
-      phone_code
+			phone_code,
 		},
 	} = props;
 	const { widthScaleFactor } = useMediaAndPlatform();
