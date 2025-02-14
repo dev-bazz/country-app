@@ -5,11 +5,19 @@ import {
 	BottomSheetFlatList,
 	BottomSheetTextInput,
 } from '@gorhom/bottom-sheet';
-import { forwardRef, useCallback, useMemo } from 'react';
+import {
+	forwardRef,
+	useCallback,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
 import { UIText } from '../text';
 import { useAppContext } from '@/context';
 import { View } from 'react-native';
 import { useMediaAndPlatform } from '@/hooks';
+import type { CountryType } from '@/types/countries';
+import { Link } from 'expo-router';
 type forwardRefType = BottomSheetModal | null;
 interface Props {
 	snapPoints?: string[];
@@ -36,10 +44,11 @@ interface Props {
  */
 export const ModalBottomSheet = forwardRef<forwardRefType, Props>(
 	(props, ref) => {
-		const { theme } = useAppContext();
+		const { theme, countries } = useAppContext();
+		const [searchRes, setSearchRes] = useState<CountryType[]>([]);
 		const { widthScaleFactor } = useMediaAndPlatform();
 		const snapPoint = useMemo(
-			() => props.snapPoints ?? ['50%', '80%'],
+			() => props.snapPoints ?? ['50%', '80%', '100%'],
 			[props.snapPoints],
 		);
 		const renderBackdrop = useCallback(
@@ -53,7 +62,25 @@ export const ModalBottomSheet = forwardRef<forwardRefType, Props>(
 			),
 			[],
 		);
-		
+
+		const handleSearch = useCallback(
+			(text: string) => {
+				const searchRes = text
+					? countries.filter((i) => {
+							return i.name.common
+								.toLowerCase()
+								.includes(text.toLowerCase());
+					  })
+					: [];
+				setSearchRes(searchRes);
+			},
+			[countries],
+		);
+		useEffect(() => {
+			return () => {
+				setSearchRes([]);
+			};
+		}, []);
 
 		return (
 			<BottomSheetModalProvider>
@@ -82,11 +109,12 @@ export const ModalBottomSheet = forwardRef<forwardRefType, Props>(
 								borderRadius: 4,
 								color: theme === 'dark' ? 'white' : 'black',
 							}}
+							onChangeText={(newText) => handleSearch(newText)}
 							keyboardAppearance={theme}
 						/>
 					</View>
 					<BottomSheetFlatList
-						data={[]}
+						data={searchRes}
 						contentContainerStyle={{ paddingInline: 16 }}
 						ListEmptyComponent={
 							<UIText
@@ -95,13 +123,26 @@ export const ModalBottomSheet = forwardRef<forwardRefType, Props>(
 								No data
 							</UIText>
 						}
-						renderItem={() => (
+						renderItem={(i) => (
 							<>
-								<UIText
-									fontSize={`${16 * widthScaleFactor}px`}
-									colorType={theme}>
-									Text
-								</UIText>
+								<Link
+									onPressIn={() => {
+										if (ref && 'current' in ref) {
+											ref.current?.dismiss();
+										}
+									}}
+									href={{
+										pathname: '/country/[name]',
+										params: {
+											name: i.item.name.common,
+										},
+									}}>
+									<UIText
+										fontSize={`${16 * widthScaleFactor}px`}
+										colorType={theme}>
+										{i.item.name.common}
+									</UIText>
+								</Link>
 							</>
 						)}
 					/>

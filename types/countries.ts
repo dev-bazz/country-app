@@ -33,4 +33,7 @@ export interface CountryType {
 		png: string;
 	};
 	continents: string[];
+	idd: {
+		root: string;
+	};
 }

@@ -23,6 +23,7 @@ const CountryDetails = (props: { details: CountryType }) => {
 			region,
 			coatOfArms,
 			phone_code,
+			idd,
 		},
 	} = props;
 	const { widthScaleFactor } = useMediaAndPlatform();
@@ -97,6 +98,12 @@ const CountryDetails = (props: { details: CountryType }) => {
 					widthScaleFactor={widthScaleFactor}
 					title="Continent"
 					value={continents[0]}
+				/>
+				<TextCountry
+					theme={theme}
+					widthScaleFactor={widthScaleFactor}
+					title="Phone Code"
+					value={idd.root}
 				/>
 			</View>
 		</ScrollView>
